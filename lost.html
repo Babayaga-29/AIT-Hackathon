@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report Lost Item - Campus Lost & Found</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="style.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">🏠 Home</a>
+      <a href="lost.html" class="active">📝 Report Lost Item</a>
+      <a href="found.html">🔍 Report Found Item</a>
+      <a href="browse.html">🔒 Browse Items (Admin Only)</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="login.html">🔐 Login/Register</a>
+    </nav>
+  </header>
+  <button class="theme-toggle" id="themeToggle">🌙</button>
+  <main class="container">
+    <h2>📝 Report Lost Item</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+      Help us find your lost item by providing detailed information. The more details you provide, the better chance we have of reuniting you with your belongings.
+    </p>
+    
+    <form id="lostForm">
+      <div class="form-group">
+        <label for="itemName">Item Name *</label>
+        <input id="itemName" name="itemName" type="text" placeholder="Enter item name" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="description">Detailed Description *</label>
+        <textarea id="description" name="description" rows="4" placeholder="Describe the item in detail" required></textarea>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+        <div class="form-group">
+          <label for="dateLost">Date Lost *</label>
+          <input id="dateLost" name="dateLost" type="date" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="timeLost">Approximate Time Lost</label>
+          <input id="timeLost" name="timeLost" type="time">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="locationLost">Location Lost *</label>
+        <input id="locationLost" name="locationLost" type="text" placeholder="Enter location where item was lost" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="category">Item Category</label>
+        <select id="category" name="category">
+          <option value="">Select a category</option>
+          <option value="electronics">Electronics (Phone, Laptop, etc.)</option>
+          <option value="clothing">Clothing & Accessories</option>
+          <option value="books">Books & Study Materials</option>
+          <option value="jewelry">Jewelry & Watches</option>
+          <option value="bags">Bags & Backpacks</option>
+          <option value="sports">Sports Equipment</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="image">Upload Image (Optional)</label>
+        <input id="image" name="image" type="file" accept="image/*">
+        <small style="color: var(--text-secondary); font-size: 0.9rem;">Upload a photo of the item or similar item to help with identification</small>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+        <div class="form-group">
+          <label for="contact">Contact Email *</label>
+          <input id="contact" name="contact" type="email" placeholder="your.email@university.edu" required readonly>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Phone Number (Optional)</label>
+          <input id="phone" name="phone" type="tel" placeholder="+1 (555) 123-4567" readonly>
+        </div>
+      </div>
+      
+      <div style="background: var(--secondary); padding: 1.5rem; border-radius: var(--radius); margin: 1.5rem 0; border: 1px solid var(--border);">
+        <h3 style="color: var(--text); margin-bottom: 1rem;">👤 Profile Information</h3>
+        <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
+          <strong>Enrollment Number:</strong> <span id="enrollmentDisplay">Not set</span>
+        </p>
+        <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">
+           ⚠️ Only your enrollment number will be displayed publicly. Other details remain private.
+         </p>
+         <a href="profile.html" style="color: var(--highlight); text-decoration: none; font-weight: 500;">📝 Update Profile</a>
+       </div>
+       
+       <div id="groupInfo" style="background: var(--secondary); padding: 1.5rem; border-radius: var(--radius); margin: 1.5rem 0; border: 1px solid var(--border); display: none;">
+         <h3 style="color: var(--text); margin-bottom: 1rem;">🏫 Group Information</h3>
+         <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
+           <strong>College/Group:</strong> <span id="groupDisplay">Not set</span>
+         </p>
+         <p style="color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.9rem;">
+           ✅ This item will be visible to your group members for better privacy.
+         </p>
+         <a href="profile.html" style="color: var(--highlight); text-decoration: none; font-weight: 500;">📝 Update Group</a>
+       </div>
+      
+      <button type="submit">📤 Submit Lost Item Report</button>
+    </form>
+  </main>
+  <footer>
+    <p>&copy; 2024 Campus Lost & Found Portal | Made with ❤️ for campus communities</p>
+  </footer>
+  
+  <script>
+    // Load profile data
+    function loadProfileData() {
+      const savedProfile = localStorage.getItem('userProfile');
+      if (savedProfile) {
+        const profile = JSON.parse(savedProfile);
+        document.getElementById('contact').value = profile.email || '';
+        document.getElementById('phone').value = profile.phone || '';
+        document.getElementById('enrollmentDisplay').textContent = profile.enrollmentNo || 'Not set';
+        
+        // Load and display group information
+        const userGroup = localStorage.getItem('userGroup');
+        if (userGroup) {
+          const groups = JSON.parse(localStorage.getItem('collegeGroups') || '[]');
+          const groupInfo = groups.find(g => g.code === userGroup);
+          if (groupInfo) {
+            document.getElementById('groupDisplay').textContent = `${groupInfo.icon} ${groupInfo.name}`;
+            document.getElementById('groupInfo').style.display = 'block';
+          }
+        }
+      }
+    }
+    
+    document.getElementById('lostForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Check if profile is set up
+      const savedProfile = localStorage.getItem('userProfile');
+      if (!savedProfile) {
+        alert('⚠️ Please set up your profile first before reporting a lost item.');
+        window.location.href = 'profile.html';
+        return;
+      }
+      
+      const profile = JSON.parse(savedProfile);
+      if (!profile.enrollmentNo || !profile.email) {
+        alert('⚠️ Please complete your profile with enrollment number and email before reporting a lost item.');
+        window.location.href = 'profile.html';
+        return;
+      }
+      
+      // Get form data
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData);
+      
+      // Add profile data
+      data.enrollmentNo = profile.enrollmentNo;
+      data.fullName = profile.fullName;
+      
+      // Show success message
+      alert('✅ Lost item report submitted successfully! We will notify you if your item is found.');
+      
+      // Update activity count
+      const activity = JSON.parse(localStorage.getItem('userActivity') || '{"lost": 0, "found": 0, "recovered": 0}');
+      activity.lost = (activity.lost || 0) + 1;
+      localStorage.setItem('userActivity', JSON.stringify(activity));
+      
+      // Reset form
+      this.reset();
+      loadProfileData();
+    });
+    
+    // Set default date to today
+    document.getElementById('dateLost').value = new Date().toISOString().split('T')[0];
+    
+    // Load profile data on page load
+    loadProfileData();
+  </script>
+  
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+    
+    // Theme toggle function
+    function toggleTheme() {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    }
+    
+    // Update theme icon
+    function updateThemeIcon(theme) {
+      themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+    }
+    
+    // Event listener
+    themeToggle.addEventListener('click', toggleTheme);
+  </script>
+</body>
+</html>

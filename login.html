@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login/Register - Campus Lost & Found</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="style.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap" rel="stylesheet">
+  <style>
+    .toggle-link { 
+      color: var(--highlight); 
+      cursor: pointer; 
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .toggle-link:hover { 
+      color: var(--text);
+      text-decoration: underline;
+    }
+    .form-container {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .welcome-text {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: var(--text-secondary);
+    }
+    .social-login {
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .social-btn {
+      background: var(--secondary);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.8rem 1.5rem;
+      border-radius: var(--radius);
+      margin: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-decoration: none;
+    }
+    .social-btn:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">🏠 Home</a>
+      <a href="lost.html">📝 Report Lost Item</a>
+      <a href="found.html">🔍 Report Found Item</a>
+      <a href="browse.html">🔒 Browse Items (Admin Only)</a>
+      <a href="profile.html">👤 Profile</a>
+      <a href="login.html" class="active">🔐 Login/Register</a>
+    </nav>
+  </header>
+  <button class="theme-toggle" id="themeToggle">🌙</button>
+  <main class="container">
+    <div class="form-container">
+      <h2 id="formTitle">🔐 Welcome Back</h2>
+      <p class="welcome-text" id="welcomeText">
+        Sign in to your account to manage your lost and found reports, track items, and receive notifications.
+      </p>
+      
+      <form id="authForm" autocomplete="off">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input id="email" name="email" type="email" placeholder="Enter your email address" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" placeholder="Enter your password" required minlength="6">
+        </div>
+        
+        <div class="form-group" id="confirmDiv" style="display:none;">
+          <label for="confirm">Confirm Password</label>
+          <input id="confirm" name="confirm" type="password" placeholder="Re-enter your password">
+        </div>
+        
+        <div class="form-group" id="nameDiv" style="display:none;">
+          <label for="name">Full Name</label>
+          <input id="name" name="name" type="text" placeholder="Enter your full name">
+        </div>
+        
+        <button type="submit" id="submitBtn">Sign In</button>
+        
+        <div style="margin-top:1.5rem; text-align: center;">
+          <span id="toggleText">Don't have an account?</span>
+          <span class="toggle-link" id="toggleLink">Create Account</span>
+        </div>
+      </form>
+      
+      <div class="social-login">
+        <p style="color: var(--text-secondary); margin-bottom: 1rem;">Or continue with</p>
+        <a href="#" class="social-btn" onclick="alert('Google login (demo only)')">Google</a>
+        <a href="#" class="social-btn" onclick="alert('Microsoft login (demo only)')">Microsoft</a>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2024 Campus Lost & Found Portal | Made with ❤️ for campus communities</p>
+  </footer>
+  <script>
+    const formTitle = document.getElementById('formTitle');
+    const welcomeText = document.getElementById('welcomeText');
+    const confirmDiv = document.getElementById('confirmDiv');
+    const nameDiv = document.getElementById('nameDiv');
+    const submitBtn = document.getElementById('submitBtn');
+    const toggleText = document.getElementById('toggleText');
+    const toggleLink = document.getElementById('toggleLink');
+    let isLogin = true;
+
+    toggleLink.onclick = () => {
+      isLogin = !isLogin;
+      
+      if (isLogin) {
+        formTitle.textContent = '🔐 Welcome Back';
+        welcomeText.textContent = 'Sign in to your account to manage your lost and found reports, track items, and receive notifications.';
+        confirmDiv.style.display = 'none';
+        nameDiv.style.display = 'none';
+        submitBtn.textContent = 'Sign In';
+        toggleText.textContent = "Don't have an account?";
+        toggleLink.textContent = "Create Account";
+      } else {
+        formTitle.textContent = '📝 Create Account';
+        welcomeText.textContent = 'Join our community to report lost items, help others find their belongings, and stay updated on campus lost and found activities.';
+        confirmDiv.style.display = 'block';
+        nameDiv.style.display = 'block';
+        submitBtn.textContent = 'Create Account';
+        toggleText.textContent = "Already have an account?";
+        toggleLink.textContent = "Sign In";
+      }
+    };
+
+    document.getElementById('authForm').onsubmit = e => {
+      e.preventDefault();
+      
+      if (!isLogin) {
+        const pw = document.getElementById('password').value;
+        const conf = document.getElementById('confirm').value;
+        const name = document.getElementById('name').value;
+        
+        if (!name.trim()) {
+          alert('Please enter your full name');
+          return;
+        }
+        
+        if (pw !== conf) {
+          alert('Passwords do not match!');
+          return;
+        }
+        
+        if (pw.length < 6) {
+          alert('Password must be at least 6 characters long');
+          return;
+        }
+      }
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      if (!email || !password) {
+        alert('Please fill in all required fields');
+        return;
+      }
+      
+      // Simulate authentication
+      if (isLogin) {
+        alert('✅ Successfully signed in! Welcome back to the Campus Lost & Found Portal.');
+        // Redirect to profile page after login
+        setTimeout(() => {
+          window.location.href = 'profile.html';
+        }, 1000);
+      } else {
+        alert('✅ Account created successfully! Please complete your profile to get started.');
+        // Redirect to profile page after registration
+        setTimeout(() => {
+          window.location.href = 'profile.html';
+        }, 1000);
+      }
+      
+      // Reset form
+      document.getElementById('authForm').reset();
+    };
+  </script>
+  
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+    
+    // Theme toggle function
+    function toggleTheme() {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    }
+    
+    // Update theme icon
+    function updateThemeIcon(theme) {
+      themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+    }
+    
+    // Event listener
+    themeToggle.addEventListener('click', toggleTheme);
+  </script>
+</body>
+</html>

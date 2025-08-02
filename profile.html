@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile - Campus Lost & Found</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="style.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="index.html">🏠 Home</a>
+      <a href="lost.html">📝 Report Lost Item</a>
+      <a href="found.html">🔍 Report Found Item</a>
+      <a href="browse.html">🔒 Browse Items (Admin Only)</a>
+      <a href="profile.html" class="active">👤 Profile</a>
+      <a href="login.html">🔐 Login/Register</a>
+    </nav>
+  </header>
+  <button class="theme-toggle" id="themeToggle">🌙</button>
+  <main class="container">
+    <h2>👤 User Profile</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+      Complete your profile information to start using the Campus Lost & Found Portal. Your enrollment number will be displayed publicly while other details remain private.
+    </p>
+    
+    <div id="welcomeMessage" style="background: var(--gradient-accent); color: white; padding: 1.5rem; border-radius: var(--radius); margin-bottom: 2rem; text-align: center; display: none;">
+      <h3 style="margin-bottom: 1rem;">🎉 Welcome to Campus Lost & Found!</h3>
+      <p>Please complete your profile to start reporting lost and found items.</p>
+    </div>
+    
+    <form id="profileForm">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+        <div class="form-group">
+          <label for="fullName">Full Name *</label>
+          <input id="fullName" name="fullName" type="text" placeholder="Enter your full name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="enrollmentNo">Enrollment Number *</label>
+          <input id="enrollmentNo" name="enrollmentNo" type="text" placeholder="Enter your enrollment number" required>
+        </div>
+      </div>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input id="email" name="email" type="email" placeholder="your.email@university.edu" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input id="phone" name="phone" type="tel" placeholder="+1 (555) 123-4567">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="department">Department/Program</label>
+        <select id="department" name="department">
+          <option value="">Select your department</option>
+          <option value="computer-science">Computer Science</option>
+          <option value="engineering">Engineering</option>
+          <option value="business">Business Administration</option>
+          <option value="arts">Arts & Humanities</option>
+          <option value="science">Natural Sciences</option>
+          <option value="medicine">Medicine</option>
+          <option value="law">Law</option>
+          <option value="education">Education</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="year">Year of Study</label>
+        <select id="year" name="year">
+          <option value="">Select year</option>
+          <option value="1">1st Year</option>
+          <option value="2">2nd Year</option>
+          <option value="3">3rd Year</option>
+          <option value="4">4th Year</option>
+          <option value="5">5th Year</option>
+          <option value="graduate">Graduate Student</option>
+          <option value="faculty">Faculty/Staff</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="collegeGroup">College/Group</label>
+        <div style="display: flex; gap: 1rem; align-items: center; margin-top: 0.5rem;">
+          <select id="collegeGroup" name="collegeGroup" style="flex: 1;">
+            <option value="">Select your college/group</option>
+            <option value="create-new">➕ Create New Group</option>
+          </select>
+          <button type="button" id="joinGroupBtn" style="padding: 0.8rem 1rem; background: var(--accent);">🔗 Join Group</button>
+          <button type="button" id="createGroupBtn" style="padding: 0.8rem 1rem; background: var(--highlight);">🏫 Create Group</button>
+        </div>
+      </div>
+      
+      <div id="createGroupSection" style="display: none; background: var(--secondary); padding: 1.5rem; border-radius: var(--radius); margin-top: 1rem; border: 1px solid var(--border);">
+        <h4 style="color: var(--text); margin-bottom: 1rem;">🏫 Create New College Group</h4>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+          <div class="form-group">
+            <label for="groupName">Group Name</label>
+            <input id="groupName" name="groupName" type="text" placeholder="e.g., Computer Science College">
+          </div>
+          <div class="form-group">
+            <label for="groupIcon">Group Icon</label>
+            <select id="groupIcon" name="groupIcon">
+              <option value="🏫">🏫 University</option>
+              <option value="💻">💻 Computer Science</option>
+              <option value="🔬">🔬 Engineering</option>
+              <option value="📊">📊 Business</option>
+              <option value="🎨">🎨 Arts</option>
+              <option value="⚕️">⚕️ Medicine</option>
+              <option value="⚖️">⚖️ Law</option>
+              <option value="📚">📚 Education</option>
+              <option value="🔧">🔧 Technology</option>
+              <option value="🌟">🌟 General</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top: 1rem; padding: 1rem; background: var(--card-bg); border-radius: var(--radius); border: 1px solid var(--border);">
+          <p style="color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.9rem;">📋 Group Code (Share this with others to join):</p>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <input id="groupCode" type="text" readonly style="flex: 1; background: var(--bg);" placeholder="Code will be generated...">
+            <button type="button" id="copyCodeBtn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">📋 Copy</button>
+          </div>
+        </div>
+      </div>
+      
+      <div id="joinGroupSection" style="display: none; background: var(--secondary); padding: 1.5rem; border-radius: var(--radius); margin-top: 1rem; border: 1px solid var(--border);">
+        <h4 style="color: var(--text); margin-bottom: 1rem;">🔗 Join Existing Group</h4>
+        <div class="form-group">
+          <label for="joinCode">Enter Group Code</label>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <input id="joinCode" type="text" placeholder="Enter the group code here">
+            <button type="button" id="joinCodeBtn" style="padding: 0.8rem 1rem; background: var(--accent);">Join</button>
+          </div>
+        </div>
+      </div>
+      
+      <button type="submit">💾 Save Profile</button>
+    </form>
+    
+    <div style="margin-top: 3rem;">
+      <h3 style="color: var(--text); margin-bottom: 1rem;">📊 Your Activity</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+        <div style="background: var(--secondary); padding: 1.5rem; border-radius: var(--radius); text-align: center; border: 1px solid var(--border);">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">📝</div>
+          <div style="font-weight: 600; color: var(--text);">Lost Items</div>
+          <div style="color: var(--highlight); font-size: 1.5rem; font-weight: 600;" id="lostCount">0</div>
+        </div>
+        
+        <div style="background: var(--secondary); padding: 1.5rem; border-radius: var(--radius); text-align: center; border: 1px solid var(--border);">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔍</div>
+          <div style="font-weight: 600; color: var(--text);">Found Items</div>
+          <div style="color: var(--accent); font-size: 1.5rem; font-weight: 600;" id="foundCount">0</div>
+        </div>
+        
+        <div style="background: var(--secondary); padding: 1.5rem; border-radius: var(--radius); text-align: center; border: 1px solid var(--border);">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">✅</div>
+          <div style="font-weight: 600; color: var(--text);">Recovered</div>
+          <div style="color: var(--text-secondary); font-size: 1.5rem; font-weight: 600;" id="recoveredCount">0</div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <p>&copy; 2024 Campus Lost & Found Portal | Made with ❤️ for campus communities</p>
+  </footer>
+  
+  <script>
+    // Load saved profile data
+    function loadProfile() {
+      const savedProfile = localStorage.getItem('userProfile');
+      if (savedProfile) {
+        const profile = JSON.parse(savedProfile);
+        document.getElementById('fullName').value = profile.fullName || '';
+        document.getElementById('enrollmentNo').value = profile.enrollmentNo || '';
+        document.getElementById('email').value = profile.email || '';
+        document.getElementById('phone').value = profile.phone || '';
+        document.getElementById('department').value = profile.department || '';
+        document.getElementById('year').value = profile.year || '';
+      }
+      
+      // Load activity counts
+      const activity = JSON.parse(localStorage.getItem('userActivity') || '{"lost": 0, "found": 0, "recovered": 0}');
+      document.getElementById('lostCount').textContent = activity.lost || 0;
+      document.getElementById('foundCount').textContent = activity.found || 0;
+      document.getElementById('recoveredCount').textContent = activity.recovered || 0;
+    }
+    
+    // Save profile data
+    document.getElementById('profileForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const profile = Object.fromEntries(formData);
+      
+      // Save to localStorage
+      localStorage.setItem('userProfile', JSON.stringify(profile));
+      
+      alert('✅ Profile saved successfully! You can now use all features of the portal.');
+      
+      // Redirect to home page after profile completion
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1500);
+    });
+    
+    // Load profile on page load
+    loadProfile();
+    
+    // Show welcome message for new users
+    const savedProfile = localStorage.getItem('userProfile');
+    if (!savedProfile) {
+      document.getElementById('welcomeMessage').style.display = 'block';
+    }
+    
+    // Group system functionality
+    const collegeGroupSelect = document.getElementById('collegeGroup');
+    const joinGroupBtn = document.getElementById('joinGroupBtn');
+    const createGroupBtn = document.getElementById('createGroupBtn'); // New button
+    const createGroupSection = document.getElementById('createGroupSection');
+    const joinGroupSection = document.getElementById('joinGroupSection');
+    const groupNameInput = document.getElementById('groupName');
+    const groupIconSelect = document.getElementById('groupIcon');
+    const groupCodeInput = document.getElementById('groupCode');
+    const copyCodeBtn = document.getElementById('copyCodeBtn');
+    const joinCodeInput = document.getElementById('joinCode');
+    const joinCodeBtn = document.getElementById('joinCodeBtn');
+    
+    // Load existing groups
+    function loadGroups() {
+      const groups = JSON.parse(localStorage.getItem('collegeGroups') || '[]');
+      const currentGroup = localStorage.getItem('userGroup');
+      
+      // Clear existing options except the first two
+      while (collegeGroupSelect.children.length > 2) {
+        collegeGroupSelect.removeChild(collegeGroupSelect.lastChild);
+      }
+      
+      // Add existing groups
+      groups.forEach(group => {
+        const option = document.createElement('option');
+        option.value = group.code;
+        option.textContent = `${group.icon} ${group.name}`;
+        if (group.code === currentGroup) {
+          option.selected = true;
+        }
+        collegeGroupSelect.appendChild(option);
+      });
+    }
+    
+    // Generate unique group code
+    function generateGroupCode() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return code;
+    }
+    
+    // Handle college group selection
+    collegeGroupSelect.addEventListener('change', function() {
+      if (this.value === 'create-new') {
+        createGroupSection.style.display = 'block';
+        joinGroupSection.style.display = 'none';
+        // Generate code when creating new group
+        groupCodeInput.value = generateGroupCode();
+      } else if (this.value) {
+        createGroupSection.style.display = 'none';
+        joinGroupSection.style.display = 'none';
+        // Save selected group
+        localStorage.setItem('userGroup', this.value);
+      } else {
+        createGroupSection.style.display = 'none';
+        joinGroupSection.style.display = 'none';
+      }
+    });
+    
+    // Handle join group button
+    joinGroupBtn.addEventListener('click', function() {
+      createGroupSection.style.display = 'none';
+      joinGroupSection.style.display = 'block';
+    });
+    
+    // Handle create group button
+    createGroupBtn.addEventListener('click', function() {
+      createGroupSection.style.display = 'block';
+      joinGroupSection.style.display = 'none';
+      collegeGroupSelect.value = 'create-new';
+      // Generate code when creating new group
+      groupCodeInput.value = generateGroupCode();
+    });
+    
+    // Handle copy code button
+    copyCodeBtn.addEventListener('click', function() {
+      groupCodeInput.select();
+      document.execCommand('copy');
+      this.textContent = '✅ Copied!';
+      setTimeout(() => {
+        this.textContent = '📋 Copy';
+      }, 2000);
+    });
+    
+    // Handle join code button
+    joinCodeBtn.addEventListener('click', function() {
+      const joinCode = joinCodeInput.value.trim().toUpperCase();
+      const groups = JSON.parse(localStorage.getItem('collegeGroups') || '[]');
+      const group = groups.find(g => g.code === joinCode);
+      
+      if (group) {
+        localStorage.setItem('userGroup', joinCode);
+        collegeGroupSelect.value = joinCode;
+        joinGroupSection.style.display = 'none';
+        joinCodeInput.value = '';
+        alert(`✅ Successfully joined ${group.icon} ${group.name}!`);
+        loadGroups(); // Refresh the dropdown
+      } else {
+        alert('❌ Invalid group code. Please check and try again.');
+      }
+    });
+    
+    // Handle group creation in form submission
+    document.getElementById('profileForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = new FormData(this);
+      const profile = Object.fromEntries(formData);
+      
+      // Handle group creation if selected
+      if (collegeGroupSelect.value === 'create-new' && groupNameInput.value.trim()) {
+        const newGroup = {
+          name: groupNameInput.value.trim(),
+          icon: groupIconSelect.value,
+          code: groupCodeInput.value,
+          createdBy: profile.fullName || 'Unknown',
+          createdAt: new Date().toISOString(),
+          admin: profile.enrollmentNo || 'Unknown'
+        };
+        
+        const groups = JSON.parse(localStorage.getItem('collegeGroups') || '[]');
+        groups.push(newGroup);
+        localStorage.setItem('collegeGroups', JSON.stringify(groups));
+        
+        // Set user's group to the newly created one
+        localStorage.setItem('userGroup', newGroup.code);
+        profile.collegeGroup = newGroup.code;
+        
+        alert(`✅ Group "${newGroup.name}" created successfully! Share the code "${newGroup.code}" with others to join.`);
+      }
+      
+      // Save to localStorage
+      localStorage.setItem('userProfile', JSON.stringify(profile));
+      
+      alert('✅ Profile saved successfully! You can now use all features of the portal.');
+      
+      // Redirect to home page after profile completion
+      setTimeout(() => {
+        window.location.href = 'index.html';
+      }, 1500);
+    });
+    
+    // Load groups on page load
+    loadGroups();
+  </script>
+  
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    
+    // Load saved theme
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    html.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme);
+    
+    // Theme toggle function
+    function toggleTheme() {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    }
+    
+    // Update theme icon
+    function updateThemeIcon(theme) {
+      themeToggle.textContent = theme === 'dark' ? '🌙' : '☀️';
+    }
+    
+    // Event listener
+    themeToggle.addEventListener('click', toggleTheme);
+  </script>
+</body>
+</html> 
